@@ -1,9 +1,9 @@
 package com.kryhowsky.maslibrary.model.dao;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 
@@ -12,12 +12,13 @@ import java.util.Set;
 
 @Data
 @Entity
-@Builder
+@SuperBuilder
 @Audited
 @NoArgsConstructor
 @AllArgsConstructor
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(indexes = @Index(name = "idx_email", columnList = "email", unique = true))
-public class User extends Auditable {
+public class Person extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,13 +29,15 @@ public class User extends Auditable {
 
     @NotAudited
     private String password;
+
     private String firstName;
     private String lastName;
-    private String activationToken;
-    private String resetPasswordToken;
+
+    @OneToOne
+    private Sex sex;
 
     @ManyToMany
-    @JoinTable(name = "user_role", inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "person_role", inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
 }

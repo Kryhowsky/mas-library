@@ -1,6 +1,7 @@
 package com.kryhowsky.maslibrary.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.kryhowsky.maslibrary.model.dao.Sex;
 import com.kryhowsky.maslibrary.validator.PasswordValid;
 import com.kryhowsky.maslibrary.validator.group.Create;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @PasswordValid(message = "Password and ConfirmPassword should be the same", groups = Create.class)
-public class UserDto extends AuditableDto {
+public class PersonDto {
 
     private Long id;
 
@@ -33,13 +34,15 @@ public class UserDto extends AuditableDto {
 
     private String confirmPassword;
 
-    private List<String> roles;
-
     @NotBlank
     private String firstName;
 
     @NotBlank
     private String lastName;
 
-    private Integer revisionNumber;
+    @NotBlank
+    private Sex sex;
+
+    private List<String> roles;
+
 }

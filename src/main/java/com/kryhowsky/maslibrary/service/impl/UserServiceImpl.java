@@ -1,6 +1,6 @@
 package com.kryhowsky.maslibrary.service.impl;
 
-import com.kryhowsky.maslibrary.model.dao.User;
+import com.kryhowsky.maslibrary.model.dao.Administrator;
 import com.kryhowsky.maslibrary.repository.RoleRepository;
 import com.kryhowsky.maslibrary.repository.UserRepository;
 import com.kryhowsky.maslibrary.security.SecurityUtils;
@@ -25,11 +25,11 @@ public class UserServiceImpl implements UserService {
 //    private final MailService mailService;
 
     @Override
-    public User save(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        roleRepository.findByName("ROLE_USER").ifPresent(role -> user.setRoles(Collections.singleton(role)));
+    public Administrator save(Administrator administrator) {
+        administrator.setPassword(passwordEncoder.encode(administrator.getPassword()));
+        roleRepository.findByName("ROLE_USER").ifPresent(role -> administrator.setRoles(Collections.singleton(role)));
 //        user.setActivationToken(UUID.randomUUID().toString());
-        var result = userRepository.save(user);
+        var result = userRepository.save(administrator);
 //        Map<String, Object> variables = new HashMap<>();
 //        variables.put("link", backendLink + "/api/users/activate?token=" + user.getActivationToken());
 //        mailService.sendEmail(variables, "greetingsMail", user.getEmail());
@@ -38,12 +38,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User update(User user, Long id) {
+    public Administrator update(Administrator administrator, Long id) {
 
         var userDb = getUserById(id);
-        userDb.setEmail(user.getEmail());
-        userDb.setFirstName(user.getFirstName());
-        userDb.setLastName(user.getLastName());
+        userDb.setEmail(administrator.getEmail());
+        userDb.setFirstName(administrator.getFirstName());
+        userDb.setLastName(administrator.getLastName());
 
         return userDb;
     }
@@ -54,42 +54,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> getPage(Pageable pageable) {
+    public Page<Administrator> getPage(Pageable pageable) {
         return userRepository.findAll(pageable);
     }
 
     @Override
-    public User getUserById(Long id) {
+    public Administrator getUserById(Long id) {
         return userRepository.getById(id);
     }
 
     @Override
-    public User getCurrentUser() {
+    public Administrator getCurrentUser() {
         return userRepository.findByEmail(SecurityUtils.getCurrentEmailUser()).orElseThrow(EntityNotFoundException::new);
     }
 
-    @Override
-    @Transactional
-    public void activateUser(String activationToken) {
-        var user = userRepository.findByActivationToken(activationToken).orElseThrow(EntityNotFoundException::new);
-        user.setActivationToken(null);
-    }
-
-    @Override
-    @Transactional
-    public void generateResetPasswordToken(String email) {
-        var user = userRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
-//        user.setResetPasswordToken(UUID.randomUUID().toString());
-//        Map<String, Object> variables = new HashMap<>();
-//        variables.put("link", frontendUrl + "/auth/new-password?token=" + user.getResetPasswordToken());
-//        mailService.sendEmail(variables, "passwordResetMail", user.getEmail());
-    }
-
-    @Override
-    @Transactional
-    public void changePassword(String token, String password) {
-        var user = userRepository.findByResetPasswordToken(token).orElseThrow(EntityNotFoundException::new);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setResetPasswordToken(null);
-    }
 }
