@@ -32,8 +32,6 @@ public class Person extends Auditable {
 
     private String firstName;
     private String lastName;
-
-    @OneToOne
     private Sex sex;
 
     @ManyToMany

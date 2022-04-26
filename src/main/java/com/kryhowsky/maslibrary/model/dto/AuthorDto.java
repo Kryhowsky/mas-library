@@ -1,6 +1,5 @@
 package com.kryhowsky.maslibrary.model.dto;
 
-import com.kryhowsky.maslibrary.model.dao.Sex;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +13,8 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class AuthorDto {
 
+    private Long id;
+
     @NotBlank
     private String firstName;
 
@@ -22,8 +23,5 @@ public class AuthorDto {
 
     @NotBlank
     private String pseudonym;
-
-    @NotBlank
-    private Sex sex;
 
 }

@@ -1,19 +1,21 @@
-package com.kryhowsky.maslibrary.model.dao;
+package com.kryhowsky.maslibrary.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Data
-@Entity
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Worker extends Person {
+public class PublishingHouseDto {
 
-    private String address;
-    private Position position;
+    private Long id;
+
+    @NotBlank
+    private String name;
+
 }

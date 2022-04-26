@@ -1,9 +1,9 @@
 package com.kryhowsky.maslibrary.model.dao;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.Entity;
@@ -14,15 +14,15 @@ import javax.persistence.Id;
 @Data
 @Entity
 @Audited
-@SuperBuilder
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Author extends Person {
+public class Genre {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String pseudonym;
+    private String name;
 
 }

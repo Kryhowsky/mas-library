@@ -17,12 +17,12 @@ import javax.persistence.Id;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Author extends Person {
+public class PublishingHouse {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String pseudonym;
+    private String name;
 
 }
