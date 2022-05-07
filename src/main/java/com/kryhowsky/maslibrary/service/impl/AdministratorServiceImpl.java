@@ -2,9 +2,8 @@ package com.kryhowsky.maslibrary.service.impl;
 
 import com.kryhowsky.maslibrary.model.dao.Administrator;
 import com.kryhowsky.maslibrary.repository.RoleRepository;
-import com.kryhowsky.maslibrary.repository.UserRepository;
-import com.kryhowsky.maslibrary.security.SecurityUtils;
-import com.kryhowsky.maslibrary.service.UserService;
+import com.kryhowsky.maslibrary.repository.AdministratorRepository;
+import com.kryhowsky.maslibrary.service.AdministratorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,14 +11,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class AdministratorServiceImpl implements AdministratorService {
 
-    private final UserRepository userRepository;
+    private final AdministratorRepository administratorRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
 //    private final MailService mailService;
@@ -27,9 +25,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public Administrator save(Administrator administrator) {
         administrator.setPassword(passwordEncoder.encode(administrator.getPassword()));
-        roleRepository.findByName("ROLE_USER").ifPresent(role -> administrator.setRoles(Collections.singleton(role)));
+        roleRepository.findByName("ROLE_ADMIN").ifPresent(role -> administrator.setRoles(Collections.singleton(role)));
 //        user.setActivationToken(UUID.randomUUID().toString());
-        var result = userRepository.save(administrator);
+        var result = administratorRepository.save(administrator);
 //        Map<String, Object> variables = new HashMap<>();
 //        variables.put("link", backendLink + "/api/users/activate?token=" + user.getActivationToken());
 //        mailService.sendEmail(variables, "greetingsMail", user.getEmail());
@@ -40,32 +38,28 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public Administrator update(Administrator administrator, Long id) {
 
-        var userDb = getUserById(id);
-        userDb.setEmail(administrator.getEmail());
-        userDb.setFirstName(administrator.getFirstName());
-        userDb.setLastName(administrator.getLastName());
+        var administratorDb = getAdministratorById(id);
+        administratorDb.setEmail(administrator.getEmail());
+        administratorDb.setFirstName(administrator.getFirstName());
+        administratorDb.setLastName(administrator.getLastName());
+        administratorDb.setAddress(administrator.getAddress());
 
-        return userDb;
+        return administratorDb;
     }
 
     @Override
     public void delete(Long id) {
-        userRepository.deleteById(id);
+        administratorRepository.deleteById(id);
     }
 
     @Override
     public Page<Administrator> getPage(Pageable pageable) {
-        return userRepository.findAll(pageable);
+        return administratorRepository.findAll(pageable);
     }
 
     @Override
-    public Administrator getUserById(Long id) {
-        return userRepository.getById(id);
-    }
-
-    @Override
-    public Administrator getCurrentUser() {
-        return userRepository.findByEmail(SecurityUtils.getCurrentEmailUser()).orElseThrow(EntityNotFoundException::new);
+    public Administrator getAdministratorById(Long id) {
+        return administratorRepository.getById(id);
     }
 
 }

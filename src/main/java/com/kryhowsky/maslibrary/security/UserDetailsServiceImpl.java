@@ -1,6 +1,6 @@
 package com.kryhowsky.maslibrary.security;
 
-import com.kryhowsky.maslibrary.repository.UserRepository;
+import com.kryhowsky.maslibrary.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -16,12 +16,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final PersonRepository personRepository;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email)
+        return personRepository.findByEmail(email)
                 .map(user -> new User(email, user.getPassword(), user.getRoles().stream()
                         .map(role -> new SimpleGrantedAuthority(role.getName()))
                         .collect(Collectors.toList())))

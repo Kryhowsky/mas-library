@@ -1,8 +1,8 @@
 package com.kryhowsky.maslibrary.mapper;
 
-import com.kryhowsky.maslibrary.model.dao.Administrator;
+import com.kryhowsky.maslibrary.model.dao.Borrower;
 import com.kryhowsky.maslibrary.model.dao.Role;
-import com.kryhowsky.maslibrary.model.dto.AdministratorDto;
+import com.kryhowsky.maslibrary.model.dto.BorrowerDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -12,14 +12,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
-public interface AdministratorMapper {
+public interface BorrowerMapper {
 
     @Mapping(target = "password", ignore = true)
     @Mapping(source = "roles", target = "roles", qualifiedByName = "roleNamesMapper")
-    AdministratorDto toDto(Administrator administrator);
+    BorrowerDto toDto(Borrower borrower);
 
     @Mapping(target = "roles", ignore = true)
-    Administrator toDao(AdministratorDto administratorDto);
+    Borrower toDao(BorrowerDto borrowerDto);
 
     @Named("roleNamesMapper")
     default List<String> roleNamesMapper(Set<Role> roles) {

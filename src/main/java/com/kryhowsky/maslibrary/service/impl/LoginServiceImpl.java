@@ -2,7 +2,7 @@ package com.kryhowsky.maslibrary.service.impl;
 
 import com.kryhowsky.maslibrary.model.dto.LoginDto;
 import com.kryhowsky.maslibrary.model.dto.TokenDto;
-import com.kryhowsky.maslibrary.repository.UserRepository;
+import com.kryhowsky.maslibrary.repository.AdministratorRepository;
 import com.kryhowsky.maslibrary.service.LoginService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class LoginServiceImpl implements LoginService {
 
     private final AuthenticationManager authenticationManager;
-    private final UserRepository userRepository;
+    private final AdministratorRepository administratorRepository;
 
     @Override
     public TokenDto authenticateUser(LoginDto loginDto) {

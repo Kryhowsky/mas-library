@@ -2,7 +2,6 @@ package com.kryhowsky.maslibrary.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kryhowsky.maslibrary.model.dao.Sex;
-import com.kryhowsky.maslibrary.validator.PasswordValid;
 import com.kryhowsky.maslibrary.validator.group.Create;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,10 +18,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@PasswordValid(message = "Password and ConfirmPassword should be the same", groups = Create.class)
 public class PersonDto {
 
     private Long id;
+
+    @NotBlank
+    private String firstName;
+
+    @NotBlank
+    private String lastName;
 
     @Email
     @NotBlank
@@ -34,13 +38,6 @@ public class PersonDto {
 
     private String confirmPassword;
 
-    @NotBlank
-    private String firstName;
-
-    @NotBlank
-    private String lastName;
-
-    @NotBlank
     private Sex sex;
 
     private List<String> roles;

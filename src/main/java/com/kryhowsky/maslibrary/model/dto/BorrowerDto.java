@@ -14,9 +14,12 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 @PasswordValid(message = "Password and ConfirmPassword should be the same", groups = Create.class)
-public class AdministratorDto extends PersonDto {
+public class BorrowerDto extends PersonDto {
 
     @NotBlank
     private String address;
+
+    @NotBlank
+    private String libraryCardNumber;
 
 }

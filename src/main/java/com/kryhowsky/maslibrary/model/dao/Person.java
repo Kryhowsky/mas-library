@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -22,20 +21,19 @@ public class Person extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
     @Column(unique = true)
-    private String email;
+    protected String email;
 
-    @NotAudited
-    private String password;
+    protected String firstName;
+    protected String lastName;
+    protected String password;
 
-    private String firstName;
-    private String lastName;
-    private Sex sex;
+    protected Sex sex;
 
     @ManyToMany
     @JoinTable(name = "person_role", inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    protected Set<Role> roles;
 
 }
