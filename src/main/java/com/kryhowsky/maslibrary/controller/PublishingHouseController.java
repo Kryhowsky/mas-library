@@ -36,7 +36,7 @@ public class PublishingHouseController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @Operation(description = "Returns page of Publishing house with specific size.", security = @SecurityRequirement(name = "bearer-key"))
     public Page<PublishingHouseDto> getPublishingHousePage(@RequestParam int page, @RequestParam int size) {
         return publishingHouseService.getPage(PageRequest.of(page, size)).map(publishingHouseMapper::toDto);
