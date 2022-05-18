@@ -1,4 +1,4 @@
-package com.kryhowsky.maslibrary.service.impl;
+package com.kryhowsky.maslibrary.service;
 
 import com.kryhowsky.maslibrary.model.dao.Book;
 import org.springframework.data.domain.Page;

@@ -7,23 +7,28 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Data
 @Entity
-@Audited
 @SuperBuilder
+@Audited
 @NoArgsConstructor
 @AllArgsConstructor
-public class PublishingHouse {
+public class Edition {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private int year;
 
-    @OneToMany(mappedBy = "publishingHouse")
-    private Set<Edition> editions;
+    private String city;
 
+    @ManyToOne
+    @JoinColumn(name = "book_iban")
+    private Book book;
+
+    @ManyToOne
+    @JoinColumn(name = "publishingHouse_id")
+    private PublishingHouse publishingHouse;
 }

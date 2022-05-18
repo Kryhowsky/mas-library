@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -15,15 +15,22 @@ import java.util.Set;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PublishingHouse {
+public class Borrowing {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private LocalDateTime dateOfBorrowing;
 
-    @OneToMany(mappedBy = "publishingHouse")
-    private Set<Edition> editions;
+    private LocalDateTime dateOfReturn;
+
+    @ManyToOne
+    @JoinColumn(name = "book_iban")
+    private Book book;
+
+    @ManyToOne
+    @JoinColumn(name = "borrower_libraryCardNumber")
+    private Borrower borrower;
 
 }

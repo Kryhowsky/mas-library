@@ -7,6 +7,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -23,6 +24,19 @@ public abstract class Book {
 
     @Column(unique = true)
     private String title;
+
+    @ManyToOne
+    private Author author;
+
+    @OneToMany(mappedBy = "book")
+    private Set<Edition> editions;
+
+    @OneToMany(mappedBy = "book")
+    private Set<Borrowing> borrowings;
+
+    @ManyToOne
+    @JoinColumn(name = "bookstand_id")
+    private Bookstand bookstand;
 
     private String description;
 

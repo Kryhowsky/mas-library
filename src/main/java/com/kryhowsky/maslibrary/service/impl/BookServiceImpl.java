@@ -2,6 +2,7 @@ package com.kryhowsky.maslibrary.service.impl;
 
 import com.kryhowsky.maslibrary.model.dao.Book;
 import com.kryhowsky.maslibrary.repository.BookRepository;
+import com.kryhowsky.maslibrary.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -11,19 +11,19 @@ import java.util.Set;
 
 @Data
 @Entity
-@Audited
 @SuperBuilder
+@Audited
 @NoArgsConstructor
 @AllArgsConstructor
-public class PublishingHouse {
+public class Lane {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @OneToMany(mappedBy = "lane")
+    private Set<Bookstand> bookstands;
 
-    @OneToMany(mappedBy = "publishingHouse")
-    private Set<Edition> editions;
+    private char symbol;
 
 }

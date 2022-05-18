@@ -11,19 +11,22 @@ import java.util.Set;
 
 @Data
 @Entity
-@Audited
 @SuperBuilder
+@Audited
 @NoArgsConstructor
 @AllArgsConstructor
-public class PublishingHouse {
+public class Bookstand {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "lane_id")
+    private Lane lane;
 
-    @OneToMany(mappedBy = "publishingHouse")
-    private Set<Edition> editions;
+    @OneToMany(mappedBy = "bookstand")
+    private Set<Book> books;
 
+    private int number;
 }

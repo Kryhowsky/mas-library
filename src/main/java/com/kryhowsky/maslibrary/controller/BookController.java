@@ -2,7 +2,7 @@ package com.kryhowsky.maslibrary.controller;
 
 import com.kryhowsky.maslibrary.mapper.BookMapper;
 import com.kryhowsky.maslibrary.model.dto.BookDto;
-import com.kryhowsky.maslibrary.service.impl.BookService;
+import com.kryhowsky.maslibrary.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
