@@ -1,6 +1,9 @@
 package com.kryhowsky.maslibrary.service.impl;
 
+import com.kryhowsky.maslibrary.mapper.BorrowerMapper;
 import com.kryhowsky.maslibrary.model.dao.Borrower;
+import com.kryhowsky.maslibrary.model.dto.BorrowerWithBorrowingsDto;
+import com.kryhowsky.maslibrary.model.dto.BorrowingDto;
 import com.kryhowsky.maslibrary.repository.BorrowerRepository;
 import com.kryhowsky.maslibrary.repository.RoleRepository;
 import com.kryhowsky.maslibrary.service.BorrowerService;
@@ -12,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +25,7 @@ public class BorrowerServiceImpl implements BorrowerService {
     private final BorrowerRepository borrowerRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    private final BorrowerMapper borrowerMapper;
 
     @Override
     public Borrower save(Borrower borrower) {
@@ -56,6 +62,37 @@ public class BorrowerServiceImpl implements BorrowerService {
     @Override
     public Borrower getBorrowerById(Long id) {
         return borrowerRepository.getById(id);
+    }
+
+    @Override
+    public BorrowerWithBorrowingsDto getBorrowerWithBorrowingsById(Long id) {
+
+        var borrowerDb = borrowerRepository.getById(id);
+        var borrowingsDb = borrowerDb.getBorrowings();
+
+        var borrowings = borrowingsDb.stream()
+                .map(borrowing -> BorrowingDto.builder()
+                    .bookTitle(borrowing.getBook().getTitle())
+//                    .bookAuthor(borrowing.getBook().getAuthor().getPseudonym())
+                    .bookAuthor("")
+                    .bookDescription(borrowing.getBook().getDescription())
+                    .dateOfBorrowing(borrowing.getDateOfBorrowing())
+                    .dateOfReturn(borrowing.getDateOfReturn())
+                    .build())
+                .collect(Collectors.toList());
+
+        var result = BorrowerWithBorrowingsDto.builder()
+                .borrowings((List<BorrowingDto>) borrowings)
+                .address(borrowerDb.getAddress())
+                .email(borrowerDb.getEmail())
+                .firstName(borrowerDb.getFirstName())
+                .lastName(borrowerDb.getLastName())
+                .sex(borrowerDb.getSex())
+                .libraryCardNumber(borrowerDb.getLibraryCardNumber())
+                .borrower(borrowerMapper.toDto(borrowerDb))
+                .build();
+
+        return result;
     }
 
 }

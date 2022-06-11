@@ -2,6 +2,7 @@ package com.kryhowsky.maslibrary.controller;
 
 import com.kryhowsky.maslibrary.mapper.BorrowerMapper;
 import com.kryhowsky.maslibrary.model.dto.BorrowerDto;
+import com.kryhowsky.maslibrary.model.dto.BorrowerWithBorrowingsDto;
 import com.kryhowsky.maslibrary.service.BorrowerService;
 import com.kryhowsky.maslibrary.validator.group.Create;
 import io.swagger.v3.oas.annotations.Operation;
@@ -55,6 +56,12 @@ public class BorrowerController {
     @Operation(description = "Allows to delete Borrower specified by ID.", security = @SecurityRequirement(name = "bearer-key"))
     public void deleteBorrowerById(@PathVariable Long id) {
         borrowerService.delete(id);
+    }
+
+    @GetMapping("/{id}/borrowings")
+    @Operation(description = "Allows to get Borrower specified by ID with borrowings.", security = @SecurityRequirement(name = "bearer-key"))
+    public BorrowerWithBorrowingsDto getBorrowerWithBorrowingsById(@PathVariable Long id) {
+        return borrowerService.getBorrowerWithBorrowingsById(id);
     }
 
 }

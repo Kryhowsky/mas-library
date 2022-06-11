@@ -29,8 +29,31 @@ public class Borrowing {
     @JoinColumn(name = "book_iban")
     private Book book;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "borrower_libraryCardNumber")
     private Borrower borrower;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Borrowing borrowing = (Borrowing) o;
+
+        if (id != null ? !id.equals(borrowing.id) : borrowing.id != null) return false;
+        if (dateOfBorrowing != null ? !dateOfBorrowing.equals(borrowing.dateOfBorrowing) : borrowing.dateOfBorrowing != null)
+            return false;
+        if (dateOfReturn != null ? !dateOfReturn.equals(borrowing.dateOfReturn) : borrowing.dateOfReturn != null)
+            return false;
+        if (book != null ? !book.equals(borrowing.book) : borrowing.book != null) return false;
+        return borrower != null ? borrower.equals(borrowing.borrower) : borrowing.borrower == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (dateOfBorrowing != null ? dateOfBorrowing.hashCode() : 0);
+        result = 31 * result + (dateOfReturn != null ? dateOfReturn.hashCode() : 0);
+        return result;
+    }
 }

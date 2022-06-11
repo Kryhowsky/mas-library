@@ -31,7 +31,7 @@ public abstract class Book {
     @OneToMany(mappedBy = "book")
     private Set<Edition> editions;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
     private Set<Borrowing> borrowings;
 
     @ManyToOne
