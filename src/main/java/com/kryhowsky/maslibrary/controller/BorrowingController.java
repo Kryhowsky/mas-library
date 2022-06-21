@@ -28,7 +28,7 @@ public class BorrowingController {
         return borrowingService.getPage(PageRequest.of(page, size)).map(borrowing -> BorrowingDto.builder()
                 .dateOfBorrowing(borrowing.getDateOfBorrowing())
                 .dateOfReturn(borrowing.getDateOfReturn())
-                .bookAuthor("")
+                .bookAuthor(borrowing.getBook().getAuthor().getFirstName() + " " + borrowing.getBook().getAuthor().getLastName())
                 .bookTitle(borrowing.getBook().getTitle())
                 .bookDescription(borrowing.getBook().getDescription())
                 .build());

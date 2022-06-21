@@ -11,7 +11,13 @@ import javax.validation.constraints.NotBlank;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthorDto extends PersonDto {
+public class AuthorDto {
+
+    @NotBlank
+    private String firstName;
+
+    @NotBlank
+    private String lastName;
 
     @NotBlank
     private String pseudonym;

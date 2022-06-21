@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +18,6 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Author save(Author author) {
-        author.setRoles(Collections.emptySet());
         var result = authorRepository.save(author);
         return result;
     }
