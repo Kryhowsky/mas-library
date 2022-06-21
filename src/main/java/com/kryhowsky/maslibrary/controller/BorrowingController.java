@@ -2,6 +2,7 @@ package com.kryhowsky.maslibrary.controller;
 
 import com.kryhowsky.maslibrary.mapper.BorrowingMapper;
 import com.kryhowsky.maslibrary.model.dto.BorrowingDto;
+import com.kryhowsky.maslibrary.model.dto.NewBorrowingDto;
 import com.kryhowsky.maslibrary.service.BorrowingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -9,10 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -46,6 +44,18 @@ public class BorrowingController {
     @Operation(description = "Generates and sends the report.", security = @SecurityRequirement(name = "bearer-key"))
     public void generateOvertimeBorrowingsReport() {
 
+    }
+
+    @GetMapping("/active")
+    @Operation(description = "Checks number of active borrowings.", security = @SecurityRequirement(name = "bearer-key"))
+    public void checkNumberOfActiveBorrowingsByLibraryCardNumber(@RequestParam String libraryCardNumber) {
+        borrowingService.checkNumberOfActiveBorrowingsByLibraryCardNumber(libraryCardNumber);
+    }
+
+    @PostMapping()
+    @Operation(description = "Allows to add new borrowing.", security = @SecurityRequirement(name = "bearer-key"))
+    public void addBorrowing(@RequestBody NewBorrowingDto borrowingDto) {
+        borrowingService.addBorrowing(borrowingDto.getLibraryCardNumber(), borrowingDto.getIban());
     }
 
 }

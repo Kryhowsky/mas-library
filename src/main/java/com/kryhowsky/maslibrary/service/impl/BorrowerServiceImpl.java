@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
@@ -62,6 +63,11 @@ public class BorrowerServiceImpl implements BorrowerService {
     @Override
     public Borrower getBorrowerById(Long id) {
         return borrowerRepository.getById(id);
+    }
+
+    @Override
+    public Borrower getBorrowerByLibraryCardNumber(String libraryCardNumber) {
+        return borrowerRepository.findByLibraryCardNumber(libraryCardNumber).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override

@@ -15,4 +15,8 @@ public interface BorrowingService {
 
     void generateOvertimeReport();
 
+    void checkNumberOfActiveBorrowingsByLibraryCardNumber(String libraryCardNumber);
+
+    void addBorrowing(String libraryCardNumber, String iban);
+
 }

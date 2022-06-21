@@ -1,10 +1,13 @@
 package com.kryhowsky.maslibrary.service.impl;
 
+import com.kryhowsky.maslibrary.error.TooManyActiveBorrowingsException;
 import com.kryhowsky.maslibrary.generator.file.impl.CsvFileGenerator;
 import com.kryhowsky.maslibrary.model.dao.Borrowing;
 import com.kryhowsky.maslibrary.model.dto.BorrowingDto;
 import com.kryhowsky.maslibrary.repository.BorrowingRepository;
+import com.kryhowsky.maslibrary.service.BorrowerService;
 import com.kryhowsky.maslibrary.service.BorrowingService;
+import com.kryhowsky.maslibrary.service.PaperBookService;
 import com.kryhowsky.maslibrary.service.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.CharEncoding;
@@ -27,6 +30,8 @@ public class BorrowingServiceImpl implements BorrowingService {
 
     private final BorrowingRepository borrowingRepository;
     private final PersonService personService;
+    private final BorrowerService borrowerService;
+    private final PaperBookService paperBookService;
 
     private final CsvFileGenerator csvFileGenerator;
     private final JavaMailSender javaMailSender;
@@ -57,6 +62,27 @@ public class BorrowingServiceImpl implements BorrowingService {
         });
 
         return result;
+    }
+
+    @Override
+    public void checkNumberOfActiveBorrowingsByLibraryCardNumber(String libraryCardNumber) {
+        var numberOfActiveBorrowings = borrowingRepository.countBorrowingByBorrowerLibraryCardNumberAndDateOfReturnIsNull(libraryCardNumber);
+        System.out.println(numberOfActiveBorrowings);
+        if (numberOfActiveBorrowings >= 2) {
+            System.out.println("TOO MANY");
+            throw new TooManyActiveBorrowingsException("Borrower has too many active borrowings");
+        }
+    }
+
+    @Override
+    public void addBorrowing(String libraryCardNumber, String iban) {
+        var borrowing = Borrowing.builder()
+                .dateOfBorrowing(LocalDateTime.now())
+                .borrower(borrowerService.getBorrowerByLibraryCardNumber(libraryCardNumber))
+                .book(paperBookService.getPaperBookById(iban))
+                .build();
+
+        borrowingRepository.save(borrowing);
     }
 
     @Override

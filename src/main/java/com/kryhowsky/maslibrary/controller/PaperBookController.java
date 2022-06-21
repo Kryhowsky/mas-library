@@ -53,4 +53,10 @@ public class PaperBookController {
         paperBookService.delete(iban);
     }
 
+    @GetMapping("/quantity/{iban}")
+    @Operation(description = "Returns Quantity of Paperbook by given IBAN.", security = @SecurityRequirement(name = "bearer-key"))
+    public int getPaperBookQuantityByIban(@PathVariable String iban) {
+        return paperBookService.getBookQuantityByIsbn(iban);
+    }
+
 }

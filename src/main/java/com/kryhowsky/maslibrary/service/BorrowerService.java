@@ -13,6 +13,8 @@ public interface BorrowerService {
     Page<Borrower> getPage(Pageable pageable);
     Borrower getBorrowerById(Long id);
 
+    Borrower getBorrowerByLibraryCardNumber(String libraryCardNumber);
+
     BorrowerWithBorrowingsDto getBorrowerWithBorrowingsById(Long id);
 
 }

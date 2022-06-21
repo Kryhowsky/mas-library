@@ -1,5 +1,6 @@
 package com.kryhowsky.maslibrary.service.impl;
 
+import com.kryhowsky.maslibrary.error.NotEnoughBookQuantityException;
 import com.kryhowsky.maslibrary.model.dao.PaperBook;
 import com.kryhowsky.maslibrary.repository.PaperBookRepository;
 import com.kryhowsky.maslibrary.service.PaperBookService;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import javax.transaction.Transactional;
 
@@ -47,6 +49,17 @@ public class PaperBookServiceImpl implements PaperBookService {
     @Override
     public PaperBook getPaperBookById(String iban) {
         return paperBookRepository.getById(iban);
+    }
+
+    @Override
+    public int getBookQuantityByIsbn(String iban) {
+        var bookDb = paperBookRepository.findById(iban).orElseThrow(() -> new NotFoundException(""));
+
+        if (bookDb.getQuantity() <= 0) {
+            throw new NotEnoughBookQuantityException("Not enough book quantity.");
+        }
+
+        return bookDb.getQuantity();
     }
 
 }

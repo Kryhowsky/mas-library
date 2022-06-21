@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -12,11 +11,9 @@ import java.util.Set;
 @Data
 @Entity
 @SuperBuilder
-@Audited
 @NoArgsConstructor
 @AllArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@Table(indexes = @Index(name = "idx_iban", columnList = "iban", unique = true))
 public abstract class Book {
 
     @Id

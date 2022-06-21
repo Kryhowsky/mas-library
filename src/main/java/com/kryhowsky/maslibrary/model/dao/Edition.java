@@ -4,14 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @SuperBuilder
-@Audited
 @NoArgsConstructor
 @AllArgsConstructor
 public class Edition {

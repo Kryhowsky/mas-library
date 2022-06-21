@@ -12,4 +12,6 @@ public interface PaperBookService {
     Page<PaperBook> getPage(Pageable pageable);
     PaperBook getPaperBookById(String iban);
 
+    int getBookQuantityByIsbn(String iban);
+
 }
