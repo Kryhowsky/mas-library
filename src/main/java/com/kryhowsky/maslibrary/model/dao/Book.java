@@ -17,9 +17,8 @@ import java.util.Set;
 public abstract class Book {
 
     @Id
-    private String iban;
+    private String isbn;
 
-    @Column(unique = true)
     private String title;
 
     @ManyToOne

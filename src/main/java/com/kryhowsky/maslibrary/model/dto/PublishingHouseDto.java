@@ -1,11 +1,10 @@
 package com.kryhowsky.maslibrary.model.dto;
 
+import com.kryhowsky.maslibrary.model.dao.Address;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-
-import javax.validation.constraints.NotBlank;
 
 @Data
 @SuperBuilder
@@ -14,8 +13,7 @@ import javax.validation.constraints.NotBlank;
 public class PublishingHouseDto {
 
     private Long id;
-
-    @NotBlank
     private String name;
+    private Address address;
 
 }

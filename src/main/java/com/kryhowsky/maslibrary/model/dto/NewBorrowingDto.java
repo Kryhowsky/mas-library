@@ -15,6 +15,6 @@ public class NewBorrowingDto {
     private String libraryCardNumber;
 
     @NotBlank
-    private String iban;
+    private String isbn;
 
 }

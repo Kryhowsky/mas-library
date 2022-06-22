@@ -5,16 +5,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
+import javax.validation.constraints.NotBlank;
 
 @Data
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BorrowingWithBookDto {
+public class GenreDto {
 
-    private LocalDateTime dateOfBorrowing;
-    private LocalDateTime dateOfReturn;
-    private BookDto bookDto;
+    private Long id;
+
+    @NotBlank
+    private String name;
 
 }

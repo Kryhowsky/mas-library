@@ -22,11 +22,11 @@ public class PersonDto {
 
     private Long id;
 
-    @NotBlank
     private String firstName;
-
-    @NotBlank
     private String lastName;
+    private String address;
+    private String maidenName;
+    private boolean isBHPCourse;
 
     @Email
     @NotBlank

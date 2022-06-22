@@ -7,8 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.validation.constraints.NotBlank;
-
 @Data
 @SuperBuilder
 @NoArgsConstructor
@@ -16,10 +14,6 @@ import javax.validation.constraints.NotBlank;
 @PasswordValid(message = "Password and ConfirmPassword should be the same", groups = Create.class)
 public class BorrowerDto extends PersonDto {
 
-    @NotBlank
-    private String address;
-
-    @NotBlank
     private String libraryCardNumber;
 
 }

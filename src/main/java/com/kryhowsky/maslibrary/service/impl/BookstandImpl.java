@@ -1,8 +1,11 @@
 package com.kryhowsky.maslibrary.service.impl;
 
+import com.kryhowsky.maslibrary.mapper.BookstandMapper;
 import com.kryhowsky.maslibrary.model.dao.Bookstand;
+import com.kryhowsky.maslibrary.model.dto.AddBookstandDto;
 import com.kryhowsky.maslibrary.repository.BookstandRepository;
 import com.kryhowsky.maslibrary.service.BookstandService;
+import com.kryhowsky.maslibrary.service.LaneService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,10 +18,13 @@ import javax.transaction.Transactional;
 public class BookstandImpl implements BookstandService {
 
     private final BookstandRepository bookstandRepository;
+    private final LaneService laneService;
+    private final BookstandMapper bookstandMapper;
 
     @Override
-    public Bookstand save(Bookstand bookstand) {
-        return bookstandRepository.save(bookstand);
+    public Bookstand save(AddBookstandDto bookstandDto) {
+       laneService.addBookstand(bookstandDto.getLaneId(), bookstandDto);
+       return bookstandMapper.toDao(bookstandDto.getBookstand());
     }
 
     @Override

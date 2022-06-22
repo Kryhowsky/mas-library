@@ -1,6 +1,5 @@
 package com.kryhowsky.maslibrary.model.dao;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -11,9 +10,6 @@ import javax.persistence.Entity;
 @Entity
 @SuperBuilder
 @NoArgsConstructor
-@AllArgsConstructor
 public class Administrator extends Person {
-
-    private String address;
 
 }

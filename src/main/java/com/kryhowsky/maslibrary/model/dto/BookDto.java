@@ -17,9 +17,8 @@ import javax.validation.constraints.Size;
 public class BookDto {
 
     @NotBlank
-    private String iban;
+    private String isbn;
 
-    @NotBlank
     private String title;
 
     @Size(max = 250)

@@ -27,6 +27,9 @@ public class Person extends Auditable {
     protected String firstName;
     protected String lastName;
     protected String password;
+    protected String address;
+    protected String maidenName;
+    protected boolean isBHPCourse;
 
     protected Sex sex;
 

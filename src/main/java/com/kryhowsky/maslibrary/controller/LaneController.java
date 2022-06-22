@@ -1,6 +1,7 @@
 package com.kryhowsky.maslibrary.controller;
 
 import com.kryhowsky.maslibrary.mapper.LaneMapper;
+import com.kryhowsky.maslibrary.model.dto.AddBookstandDto;
 import com.kryhowsky.maslibrary.model.dto.LaneDto;
 import com.kryhowsky.maslibrary.service.LaneService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -51,6 +52,12 @@ public class LaneController {
     @Operation(description = "Allows to delete Paperbook specified by ID.", security = @SecurityRequirement(name = "bearer-key"))
     public void deleteLaneById(@PathVariable Long id) {
         laneService.delete(id);
+    }
+
+    @PostMapping("/add/boostand")
+    @Operation(description = "Allows to add bookstand to lane.", security = @SecurityRequirement(name = "bearer-key"))
+    public void addBookstand(@RequestBody AddBookstandDto bookstandDto) {
+        laneService.addBookstand(bookstandDto.getLaneId(), bookstandDto);
     }
 
 }

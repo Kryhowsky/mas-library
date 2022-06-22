@@ -18,6 +18,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class BorrowingServiceImpl implements BorrowingService {
         var borrowingsDb = borrowingRepository.findAll();
 
         var filteredBorrowings = borrowingsDb.stream()
-                .filter(borrowing -> borrowing.getDateOfReturn() == null && borrowing.getDateOfBorrowing().toLocalDate().plusDays(20).isBefore(ChronoLocalDate.from(LocalDateTime.now()))).collect(Collectors.toList());
+                .filter(borrowing -> borrowing.getDateOfReturn() == null && borrowing.getDateOfBorrowing().toLocalDate().plusDays(Borrowing.MAX_BORROWING_DAYS).isBefore(ChronoLocalDate.from(LocalDateTime.now()))).collect(Collectors.toList());
 
         var result = new ArrayList<BorrowingDto>();
 
@@ -57,7 +58,7 @@ public class BorrowingServiceImpl implements BorrowingService {
                     .bookTitle(borrowing.getBook().getTitle())
                     .dateOfReturn(borrowing.getDateOfReturn())
                     .bookDescription(borrowing.getBook().getDescription())
-                    .bookAuthor("") //TODO: add author pseudonym
+                    .bookAuthor(borrowing.getBook().getAuthor().getFirstName() + " " + borrowing.getBook().getAuthor().getLastName())
                     .build());
         });
 
@@ -67,22 +68,29 @@ public class BorrowingServiceImpl implements BorrowingService {
     @Override
     public void checkNumberOfActiveBorrowingsByLibraryCardNumber(String libraryCardNumber) {
         var numberOfActiveBorrowings = borrowingRepository.countBorrowingByBorrowerLibraryCardNumberAndDateOfReturnIsNull(libraryCardNumber);
-        System.out.println(numberOfActiveBorrowings);
+
         if (numberOfActiveBorrowings >= 2) {
-            System.out.println("TOO MANY");
             throw new TooManyActiveBorrowingsException("Borrower has too many active borrowings");
         }
     }
 
     @Override
+    @Transactional
     public void addBorrowing(String libraryCardNumber, String iban) {
+
+        var bookDb = paperBookService.getPaperBookById(iban);
+
         var borrowing = Borrowing.builder()
                 .dateOfBorrowing(LocalDateTime.now())
                 .borrower(borrowerService.getBorrowerByLibraryCardNumber(libraryCardNumber))
-                .book(paperBookService.getPaperBookById(iban))
+                .book(bookDb)
                 .build();
 
         borrowingRepository.save(borrowing);
+
+        bookDb.setQuantity(bookDb.getQuantity() - 1);
+
+        paperBookService.save(bookDb);
     }
 
     @Override

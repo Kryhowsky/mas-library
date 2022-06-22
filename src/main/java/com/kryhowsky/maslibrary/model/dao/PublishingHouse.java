@@ -21,6 +21,9 @@ public class PublishingHouse {
 
     private String name;
 
+    @Embedded
+    private Address address;
+
     @OneToMany(mappedBy = "publishingHouse")
     private Set<Edition> editions;
 

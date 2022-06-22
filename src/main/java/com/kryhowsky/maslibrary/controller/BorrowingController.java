@@ -55,7 +55,7 @@ public class BorrowingController {
     @PostMapping()
     @Operation(description = "Allows to add new borrowing.", security = @SecurityRequirement(name = "bearer-key"))
     public void addBorrowing(@RequestBody NewBorrowingDto borrowingDto) {
-        borrowingService.addBorrowing(borrowingDto.getLibraryCardNumber(), borrowingDto.getIban());
+        borrowingService.addBorrowing(borrowingDto.getLibraryCardNumber(), borrowingDto.getIsbn());
     }
 
 }

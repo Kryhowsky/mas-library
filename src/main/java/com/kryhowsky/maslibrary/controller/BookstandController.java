@@ -1,6 +1,7 @@
 package com.kryhowsky.maslibrary.controller;
 
 import com.kryhowsky.maslibrary.mapper.BookstandMapper;
+import com.kryhowsky.maslibrary.model.dto.AddBookstandDto;
 import com.kryhowsky.maslibrary.model.dto.BookstandDto;
 import com.kryhowsky.maslibrary.service.BookstandService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,8 +26,8 @@ public class BookstandController {
 
     @PostMapping
     @Operation(description = "Allows to add new Bookstand.")
-    public BookstandDto saveBookstand(@RequestBody @Valid BookstandDto bookstand) {
-        return bookstandMapper.toDto(bookstandService.save(bookstandMapper.toDao(bookstand)));
+    public BookstandDto saveBookstand(@RequestBody @Valid AddBookstandDto bookstand) {
+        return bookstandMapper.toDto(bookstandService.save(bookstand));
     }
 
     @GetMapping("/{id}")
