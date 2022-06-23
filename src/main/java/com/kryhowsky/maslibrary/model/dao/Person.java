@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @Data
@@ -22,11 +23,15 @@ public class Person extends Auditable {
     protected Long id;
 
     @Column(unique = true)
+    @NotBlank
     protected String email;
 
     protected String firstName;
     protected String lastName;
+
+    @NotBlank
     protected String password;
+
     protected String address;
     protected String maidenName;
     protected boolean isBHPCourse;
