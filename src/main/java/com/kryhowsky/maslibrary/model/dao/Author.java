@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
@@ -23,6 +24,7 @@ public class Author {
     private String firstName;
     private String lastName;
 
+    @Size(min = 1)
     @Convert(converter = ListToStringConverter.class)
     private List<String> pseudonym;
 
