@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Data
 @SuperBuilder
@@ -13,13 +13,8 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class AuthorDto {
 
-    @NotBlank
     private String firstName;
-
-    @NotBlank
     private String lastName;
-
-    @NotBlank
-    private String pseudonym;
+    private List<String> pseudonym;
 
 }

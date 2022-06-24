@@ -1,14 +1,13 @@
 package com.kryhowsky.maslibrary.model.dao;
 
+import com.kryhowsky.maslibrary.converter.ListToStringConverter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -23,6 +22,8 @@ public class Author {
 
     private String firstName;
     private String lastName;
-    private String pseudonym;
+
+    @Convert(converter = ListToStringConverter.class)
+    private List<String> pseudonym;
 
 }
